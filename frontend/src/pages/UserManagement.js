@@ -130,8 +130,8 @@ const UserManagement = () => {
           User Management
         </Link>
       </nav>
-      <main className="flex-1 flex flex-col items-center gap-3 p-3">
-      <section className="w-full max-w-md"> 
+      <main className="flex-1 flex flex-col items-center gap-3 p-3" style={{ backgroundImage: "url('/images/main-background-card-landscape.png')",}} >
+      {/* <section className="w-full max-w-md">  */}
       {/* <div className="p-4"> */}
         <h2 className="text-2xl font-bold mb-4">User Management</h2>
         {message && <p className="text-green-500">{message}</p>}
@@ -216,7 +216,7 @@ const UserManagement = () => {
                     <td className="px-4 py-2 border border-gray-300">{user.role}</td>
                     <td className="px-4 py-2 border border-gray-300">{user.phone}</td>
                     
-                    <td>
+                    <td className="px-4 py-2 border border-gray-300 text-center" >
                       {/* <button
                         onClick={() => handleEdit(user)}
                         className="bg-blue-500 text-white px-2 py-1 mx-1"
@@ -233,10 +233,9 @@ const UserManagement = () => {
                       <FontAwesomeIcon
                         icon={faEdit}
                         className="text-blue-500 cursor-pointer"
-                        onClick={() => handleEdit(user)}                   
-                        
-                      
+                        onClick={() => handleEdit(user)}     
                       />
+                      { "     " }
 
                       <FontAwesomeIcon
                         icon={faTrash}
@@ -251,7 +250,7 @@ const UserManagement = () => {
           </tbody>
         </table>
         
-        </section>
+        {/* </section> */}
       </main>
 
 

@@ -20,7 +20,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy"
 const App = () => {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={ <Login />} />

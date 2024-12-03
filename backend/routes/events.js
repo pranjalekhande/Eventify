@@ -6,8 +6,7 @@ const router = express.Router();
 
 // Route to create a new event
 router.post("/", authMiddleware, roleMiddleware("organizer"), async (req, res) => {
-  const { title, description, date, location } = req.body;
-  
+  const { title, description, date, location } = req.body;  
 
   try {
     const event = new Event({

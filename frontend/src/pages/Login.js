@@ -12,8 +12,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post("/users/login", { email, password });
-      localStorage.setItem("token", response.data.token); // Save JWT token
-      navigate("/dashboard"); // Redirect to dashboard
+      localStorage.setItem("token", response.data.token); 
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
       alert("Invalid email or password");
@@ -21,18 +21,18 @@ const Login = () => {
   };
 
   return (
-
+    
     <div className="min-h-screen flex flex-col justify-between bg-gray-50">
     
-    <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
-        <h1 onClick={() => window.location.href = "/" } className="text-2xl font-bold">Eventify</h1>
-        <button  onClick={() => window.location.href = "/register"}
-               className="bg-white text-blue-500 py-1 px-4 rounded">Register</button>
-    </header>
-    <div  className="min-h-screen bg-cover bg-center flex items-center justify-center"
-    style={{
-      backgroundImage: "url('/images/login-background.jpg')", // Update with your image path
-    }}>
+      <header className="bg-blue-400 text-white p-4 flex justify-between items-center">
+          <h1 onClick={() => window.location.href = "/" } className="text-2xl font-bold">Eventify</h1>
+          <button  onClick={() => window.location.href = "/register"}
+          className="bg-white text-blue-500 py-1 px-4 rounded">Register</button>
+      </header>
+
+      <main className="flex-1 flex flex-col items-center gap-6 p-6" style={{ backgroundImage: "url('/images/main-background-card-landscape.png')", // Update with your image path
+            }} >
+        <section className="w-full max-w-md"> 
       <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
         <h2 className="text-xl font-bold mb-4">Login</h2>
         <form onSubmit={handleSubmit}>
@@ -62,8 +62,8 @@ const Login = () => {
           </p>
         </form>
       </div>
-    </div>
-     {/* Footer Section */}
+      </section>
+      </main>
      <footer className="bg-gray-800 text-white p-4 text-center">
         <p>© {new Date().getFullYear()} Eventify. All rights reserved.</p>
         <p>

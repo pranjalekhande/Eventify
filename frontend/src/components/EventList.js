@@ -27,13 +27,14 @@ const EventList = () => {
     return (
       <div className="p-4">
         <h2 className="text-xl font-bold mb-4">Your Events</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" >
           {events.map((event) => (
             
             <div
               key={event._id}
               className="border p-4 rounded shadow hover:bg-gray-100 cursor-pointer"
-              onClick={() => handleEventClick(event._id)} // Navigate on click
+              onClick={() => handleEventClick(event._id)} style={{ backgroundImage: "url('/images/card-blue-background.png')", 
+              }}
             >
               <h3 className="font-bold">{event.title}</h3>
               <p>Date: {new Date(event.date).toLocaleDateString()}</p>

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import * as XLSX from "xlsx";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SendInvitation = () => {
  
   const [eventId, setSelectedEventId] = useState(""); 
   const [inviteeEmail, setEmail] = useState("");
-  // const [inviteeEmail, setInviteeEmail] = useState("");
   const [events, setEvents] = useState([]);
   const [responseMessage, setResponseMessage] = useState("");
   const [emails, setEmails] = useState("");
@@ -120,7 +119,7 @@ const SendInvitation = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gray-50">
-    <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
+      <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
       <h1
           onClick={() => (window.location.href = "/dashboard")}
           className="text-2xl font-bold cursor-pointer"
@@ -134,6 +133,7 @@ const SendInvitation = () => {
             Logout
         </button>
       </header>
+
       <nav className="bg-gray-100 p-4 shadow flex justify-around">
         <Link to="/dashboard" className="text-blue-500 hover:underline">
           Dashboard
@@ -149,9 +149,11 @@ const SendInvitation = () => {
         </Link>
       </nav>
 
-      <main className="flex-1 flex flex-col items-center gap-6 p-6">
-      <section className="w-full max-w-md"> 
+      <main className="flex-1 flex flex-col items-center gap-6 p-6" style={{ backgroundImage: "url('/images/main-background-card-landscape.png')", // Update with your image path
+            }} >
+        <section className="w-full max-w-md"> 
         <h2 className="text-xl font-bold mb-4">Send Invitation</h2>
+        
         {responseMessage && <p className="text-green-500">{responseMessage}</p>}
 
           {/* Dropdown for selecting event */}

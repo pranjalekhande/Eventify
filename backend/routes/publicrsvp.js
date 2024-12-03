@@ -7,7 +7,7 @@ const Event = require("../models/Event");
 router.get("/rsvp/:eventId/:invitationId", async (req, res) => {
     try {
       const { eventId, invitationId } = req.params;
-      console.log(eventId,invitationId)
+      
       // Find the invitation
       const invitation = await Invitation.findById(invitationId);
       if (!invitation) return res.status(404).json({ msg: "Invitation not found" });

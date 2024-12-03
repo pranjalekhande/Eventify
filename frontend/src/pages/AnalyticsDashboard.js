@@ -57,7 +57,7 @@ const AnalyticsDashboard = () => {
         
         await axiosInstance.delete(`/events/${eventId}`);
         alert("Event deleted successfully!");
-        navigate("/"); // Redirect to dashboard after deletion
+        navigate("/"); 
       } catch (error) {
         console.error("Error deleting event:", error);
         alert("Failed to delete the event.");
@@ -74,7 +74,7 @@ const AnalyticsDashboard = () => {
 
     <div className="min-h-screen flex  flex-col bg-gray-50">
 
-      <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
+      <header className="bg-blue-400 text-white p-4 flex justify-between items-center">
         <h1
           onClick={() => (window.location.href = "/dashboard")}
           className="text-2xl font-bold cursor-pointer"
@@ -105,13 +105,15 @@ const AnalyticsDashboard = () => {
           User Management
         </Link>
       </nav>
-
-        <div className="p-4">
+      {/* <main className=" flex-col  items-center p-6 md:p-12"> */}
+      <main className="flex-1 flex flex-col items-center gap-6 p-6" style={{ backgroundImage: "url('/images/main-background-card-landscape.png')", // Update with your image path
+            }} >
           <h2 className="text-2xl font-bold mb-4">RSVP Analytics</h2>
 
           {/* Edit Mode */}
           {isEditing ? (
-            <div className="border p-4 rounded shadow">
+            <div className="border p-4 rounded shadow"  style={{ backgroundImage: "url('/images/card-blue-background.png')", 
+            }}>
               <h3 className="font-bold">Edit Event</h3>
               <label className="block mb-2">
                 Title:  <input type="text"  name="title" value={formData.title} onChange={handleInputChange}  className="w-full p-2 border mb-2" />
@@ -132,8 +134,9 @@ const AnalyticsDashboard = () => {
               </button>
             </div>
           ) : (
-            // Display Event Details
-            <div className="border p-4 rounded shadow">
+          
+            <div className="border p-4 rounded shadow"  style={{ backgroundImage: "url('/images/card-blue-background.png')", 
+            }}>
               <h3 className="font-bold">{analytics.event.title}</h3>
               <p>Date: {new Date(analytics.event.date).toLocaleDateString()}</p>
               <p>Location: {analytics.event.location}</p>
@@ -147,23 +150,7 @@ const AnalyticsDashboard = () => {
             </div>
           )}
 
-          {/* <div className="border p-4 rounded shadow">
-            <h3 className="font-bold">{analytics.event.title}</h3>
-            <p>Date: {new Date(analytics.event.date).toLocaleDateString()}</p>
-            <p>Location: {analytics.event.location}</p>
-          </div> */}
-          {/* <div className="mt-4">
-            <h4 className="text-xl font-bold">Analytics Summary</h4>
-            <ul>
-              <li>Total Invites: {analytics.analytics.totalInvites}</li>
-              <li>Accepted: {analytics.analytics.accepted}</li>
-              <li>Declined: {analytics.analytics.declined}</li>
-              <li>Pending: {analytics.analytics.pending}</li>
-            </ul>
-
-          </div>
-          
-          */}
+         
           <div className="mt-4">
             <h4 className="text-xl font-bold mb-4">Analytics Summary</h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -195,7 +182,8 @@ const AnalyticsDashboard = () => {
                 Manage Invitations
             </button>
           </div>
-      </div>
+     
+      </main>
       {/* Footer Section */}
       <footer className="bg-gray-800 text-white p-4 text-center">
         <p>© {new Date().getFullYear()} Eventify. All rights reserved.</p>

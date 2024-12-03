@@ -51,6 +51,7 @@ router.post("/send", authMiddleware, async (req, res) => {
         Thank you!
       `;
 
+      
       try {
         await sendEmail(email, subject, text); // Send email to each invitee
         console.log(`Email sent to: ${email}`);

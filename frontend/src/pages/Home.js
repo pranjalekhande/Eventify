@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gray-50">
       {/* Header Section */}
-      <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
+      <header className="bg-blue-400 text-white p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Eventify</h1>
         <button
           onClick={() => window.location.href = "/login"}
@@ -15,7 +15,8 @@ const Home = () => {
       </header>
 
       {/* Main Content Section */}
-      <main className="flex-1 flex flex-col md:flex-row items-center p-6 md:p-12">
+      <main className="flex-1 flex flex-col md:flex-row items-center p-6 md:p-12" style={{ backgroundImage: "url('/images/main-background-card-landscape.png')", // Update with your image path
+            }} >
         <div className="w-full md:w-1/2 text-center md:text-left">
           <h2 className="text-4xl font-bold mb-4">Organize and Manage Events Seamlessly</h2>
           <p className="text-lg text-gray-700 mb-6">
