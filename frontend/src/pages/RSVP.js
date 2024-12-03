@@ -4,6 +4,8 @@ import axiosInstance from "../utils/axiosInstance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+import { Link, useNavigate } from "react-router-dom";
+
 
 
 const RSVP = () => {
@@ -77,62 +79,115 @@ const RSVP = () => {
     }
   };
 
-  return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">RSVP for Event</h2>
+  const handleLogout = (navigate) => {
+    localStorage.removeItem("token");
+    window.location.href = "/"
+  };  
 
-     
-      {responseMessage && <p className="text-green-500">{responseMessage}</p>}
-      {/* Input for sending invitations */}
-      <div className="mb-4">
-        <input
-          type="inviteeEmail"
-          placeholder="Enter invitee email"
-          value={inviteeEmail}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border mb-2"
-        />
-        <button
-          className="bg-blue-500 text-white py-2 px-4"
-          onClick={handleSendInvitation}
+  return (   
+    <div className="min-h-screen flex flex-col justify-between bg-gray-50">
+      <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
+        <h1
+          onClick={() => (window.location.href = "/dashboard")}
+          className="text-2xl font-bold cursor-pointer"
         >
-          Send Invitation
-        </button>
-      </div>
-      
-      <ul>
-        {invitations.map((invitation) => (
-          <li key={invitation._id} className= "border p-2 mb-2 flex justify-between items-center">
-            <div>
-            <p>Invitee: {invitation.inviteeEmail}</p>
-            <p>Status: {invitation.rsvpStatus || "Pending"}</p>
-            
-            <p>invitation Id {invitation._id}</p>
+          Eventify
+        </h1>
+        <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white py-1 px-4 rounded"
+          >
+            Logout
+      </button>
+      </header>
 
-            <button
-              className="bg-blue-500 text-white py-1 px-2 mr-2"
-              onClick={() => handleRSVP(invitation._id, "Accepted")}
-            >
-              Accepted
-            </button>
-            <button
-              className="bg-red-500 text-white py-1 px-2"
-              onClick={() => handleRSVP(invitation._id, "Declined")}
-            >
-              Decline
-            </button>
-            </div>
+      {/* Navbar */}
+      <nav className="bg-gray-100 p-4 shadow flex justify-around">
+        
+        <Link to="/dashboard" className="text-blue-500 hover:underline">
+          Dashboard
+        </Link>
+        <Link to="/create-event" className="text-blue-500 hover:underline">
+          + Create New Event
+        </Link>
+        <Link to="/send-invitation" className="text-blue-500 hover:underline">
+          Send Event Invitation
+        </Link>
+        <Link to="/admin/users" className="text-blue-500 hover:underline">
+          User Management
+        </Link>
+      </nav>
+      
+      <main className="flex-1 flex flex-col md:flex-row items-center p-6 md:p-12">
+      <div className="p-4">
+        <h2 className="text-xl font-bold mb-4">RSVP for Event</h2>      
+        {responseMessage && <p className="text-green-500">{responseMessage}</p>}
+        {/* Input for sending invitations */}
+        <div className="mb-4">
+          <input
+            type="inviteeEmail"
+            placeholder="Enter email to invite"
+            value={inviteeEmail}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-2 border mb-2"
+          />
+          <button
+            className="bg-blue-500 text-white py-2 px-4"
+            onClick={handleSendInvitation}
+          >
+            Send Invitation
+          </button>
+        </div>
+        
+        <ul>
+          {invitations.map((invitation) => (
+
             
-            <FontAwesomeIcon
-              icon={faTrash}
-              className="text-red-500 cursor-pointer"
-              onClick={() => handleDeleteInvitation(invitation._id)}
-            />
-            
-            
-          </li>
-        ))}
-      </ul>
+            <li key={invitation._id} className= "border p-2 mb-2 flex justify-between items-center">
+              <div>
+              <p>Invitee: {invitation.inviteeEmail}</p>
+              <p>Status: {invitation.rsvpStatus || "Pending"}</p>
+              
+    
+              <button
+                className="bg-blue-500 text-white py-1 px-2 mr-2"
+                onClick={() => handleRSVP(invitation._id, "Accepted")}
+              >
+                Accepted
+              </button>
+              <button
+                className="bg-red-500 text-white py-1 px-2"
+                onClick={() => handleRSVP(invitation._id, "Declined")}
+              >
+                Decline
+              </button>
+              </div>
+              
+              <FontAwesomeIcon
+                icon={faTrash}
+                className="text-red-500 cursor-pointer"
+                onClick={() => handleDeleteInvitation(invitation._id)}
+              />
+              
+              
+            </li>
+          ))}
+        </ul>
+      </div>
+      </main>
+      {/* Footer Section */}
+      <footer className="bg-gray-800 text-white p-4 text-center">
+        <p>© {new Date().getFullYear()} Eventify. All rights reserved.</p>
+        <p>
+          <a href="/privacy" className="text-blue-400 hover:underline">
+            Privacy Policy
+          </a>{" "}
+          |{" "}
+          <a href="/terms" className="text-blue-400 hover:underline">
+            Terms of Service
+          </a>
+        </p>
+      </footer>
     </div>
   );
 };

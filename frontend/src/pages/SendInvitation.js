@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import * as XLSX from "xlsx";
+import { Link, useNavigate } from "react-router-dom";
 
 const SendInvitation = () => {
  
@@ -72,7 +73,11 @@ const SendInvitation = () => {
     }
   };
 
-
+  const handleLogout = (navigate) => {
+    localStorage.removeItem("token");
+    window.location.href = "/"
+  }; 
+ 
   
   // const handleSendInvitation = async () => {
   //   if (!eventId) {
@@ -114,9 +119,40 @@ const SendInvitation = () => {
   }, []);
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-xl font-bold mb-4">Send Invitation</h2>
-      {responseMessage && <p className="text-green-500">{responseMessage}</p>}
+    <div className="min-h-screen flex flex-col justify-between bg-gray-50">
+    <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
+      <h1
+          onClick={() => (window.location.href = "/dashboard")}
+          className="text-2xl font-bold cursor-pointer"
+        >
+          Eventify
+        </h1>
+        <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white py-1 px-4 rounded"
+          >
+            Logout
+        </button>
+      </header>
+      <nav className="bg-gray-100 p-4 shadow flex justify-around">
+        <Link to="/dashboard" className="text-blue-500 hover:underline">
+          Dashboard
+        </Link>
+        <Link to="/create-event" className="text-blue-500 hover:underline">
+          + Create New Event
+        </Link>
+        <Link to="/send-invitation" className="text-blue-500 hover:underline">
+          Send Event Invitation
+        </Link>
+        <Link to="/admin/users" className="text-blue-500 hover:underline">
+          User Management
+        </Link>
+      </nav>
+
+      <main className="flex-1 flex flex-col items-center gap-6 p-6">
+      <section className="w-full max-w-md"> 
+        <h2 className="text-xl font-bold mb-4">Send Invitation</h2>
+        {responseMessage && <p className="text-green-500">{responseMessage}</p>}
 
           {/* Dropdown for selecting event */}
           <div className="mb-4">
@@ -167,8 +203,21 @@ const SendInvitation = () => {
             >
               Send Invitation
           </button>
-    
-      
+        </section>
+      </main>
+     
+      <footer className="bg-gray-800 text-white p-4 text-center">
+        <p>© {new Date().getFullYear()} Eventify. All rights reserved.</p>
+        <p>
+          <a href="/privacy" className="text-blue-400 hover:underline">
+            Privacy Policy
+          </a>{" "}
+          |{" "}
+          <a href="/terms" className="text-blue-400 hover:underline">
+            Terms of Service
+          </a>
+        </p>
+      </footer>
     </div>
   );
 };

@@ -81,9 +81,5 @@ router.post("/login", async (req, res) => {
 });
 
 
-// Protected route example
-router.get("/protected", authMiddleware, (req, res) => {
-  res.json({ msg: `Welcome user ${req.user}` });
-});
 
 module.exports = router; 

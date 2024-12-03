@@ -11,6 +11,9 @@ const Invitation = require("./models/Invitation");
 const Event = require("./models/Event");
 const adminRoutes = require("./routes/admin");
 const publicRoutes = require("./routes/publicrsvp");
+const otpRoutes = require("./routes/otpRoutes");
+
+const adminApi = require("./routes/adminRoutes")
 
 
 // dotenv.config();
@@ -32,8 +35,11 @@ app.use("/api/events", eventRoutes);
 app.use("/api/invitations", invitationRoutes);
 app.use("/api/events", analytics);
 app.use("/api/admin", adminRoutes);
-
+app.use("/api/",otpRoutes)
 app.use("/api/public", publicRoutes);
+
+app.use("/api/adminControl", adminApi);
+
 
 // Sample route for testing
 app.get("/", (req, res) => {
