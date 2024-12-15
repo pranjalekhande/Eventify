@@ -1,149 +1,108 @@
-Run Backend
-npm run dev
+# Eventify - Event Management System
 
+Eventify is a full-stack event management platform designed to simplify event organization, invitation handling, and RSVP tracking. It provides event organizers with real-time insights and invitees with an easy-to-use interface to respond to event invitations.
 
+## Features
 
-To create this event management system step-by-step, let's break down the process into key stages with a focus on mobile-friendly design and feature-by-feature implementation. Here’s a detailed plan:
+- **Event Management**: Create, update, and delete events with detailed information.
+- **Invitation Handling**: Send invitations via email, supporting both manual input and bulk upload through Excel files.
+- **RSVP Tracking**: Allow invitees to RSVP through unique links, displaying event-specific details.
+- **Analytics Dashboard**: Gain real-time insights into RSVP trends and attendee engagement.
+- **Role-Based Access**: Admin and user roles for secure feature access and user management.
 
-### **Phase 1: Project Setup**
+## Tech Stack
+- **Frontend**: React, Tailwind CSS
+- **Backend**: Node.js, Express.js
+- **Database**: PostgreSQL
+- **Authentication**: JWT-based secure authentication
+- **Email Integration**: Twilio for OTP verification and email notifications
 
-1. **Define Project Structure and Dependencies**
-   - Initialize a Git repository for version control. (done)
-   - Set up Node.js and Express for the backend API.
-   - Set up a React project for the frontend (you can use Create React App or Vite).
-   - Install core dependencies:
-     - Backend: Express, MongoDB (or preferred database), JWT (for authentication), and Nodemailer (for emails).
-     - Frontend: React Router (for navigation), Axios (for API requests), and Tailwind CSS or Styled Components (for mobile-friendly design).
+## Installation
 
-### **Phase 2: User Authentication System**
+1. Clone the repository:
+   ```bash
+      git clone https://github.com/pranjalekhande/eventify.git
+      cd eventify
 
-1. **Backend – User Authentication**
-   - Set up a user authentication API with registration and login endpoints.
-   - Use JSON Web Tokens (JWT) for secure authentication.
-   - Implement basic error handling for invalid logins or registrations.
+2. Install dependencies for the backend:
+   ```bash
+      cd backend
+      npm install
 
-2. **Frontend – Auth Pages**
-   - Design and implement responsive login and registration forms.
-   - Implement a simple context for handling authentication state across the app.
-   - Ensure mobile-friendly design using Tailwind CSS or CSS Media Queries.
+3. Install dependencies for the frontend:
+   ```bash
+      cd ../frontend
+      npm install
+     
+4. Set up environment variables: 
+   Create a .env file in the backend directory with the following:
+   ```bash
+      PORT=5000
+      DATABASE_URL=<Your PostgreSQL connection string>
+      JWT_SECRET=<Your secret key>
+      TWILIO_ACCOUNT_SID=<Your Twilio Account SID>
+      TWILIO_AUTH_TOKEN=<Your Twilio Auth Token>
+      TWILIO_PHONE_NUMBER=<Your Twilio Phone Number>
+5. Run the backend server:
+   ```bash
+      cd ../backend
+      npm start
+6. Run the frontend:
+   ```bash
+      cd ../frontend
+      npm start
+7. Access the application at http://localhost:3000.
 
-3. **Testing & Debugging**
-   - Test user signup and login flow.
-   - Verify that authenticated pages are only accessible when logged in.
-
-### **Phase 3: Event Creation and Management**
-
-1. **Backend – Event Management API**
-   - Create endpoints to handle CRUD operations for events:
-     - **Create Event**: POST `/events`
-     - **Get Events**: GET `/events` or `/events/:id`
-     - **Update Event**: PUT `/events/:id`
-     - **Delete Event**: DELETE `/events/:id`
-   - Add validation to ensure only authenticated users can create or manage events.
-
-2. **Frontend – Event Creation and Dashboard**
-   - Build a mobile-friendly event creation form.
-   - Implement an Event Dashboard that displays a list of user-created events.
-   - Allow filtering and sorting of events for easy navigation.
-
-3. **Testing & Debugging**
-   - Test creating, updating, and deleting events.
-   - Verify mobile responsiveness and usability on different devices.
-
-### **Phase 4: Invitation and RSVP System**
-
-1. **Backend – Invitation Management**
-   - Add endpoints for sending and managing invitations:
-     - **Send Invitations**: POST `/invitations`
-     - **Get Invitations**: GET `/invitations`
-     - **Update RSVP**: PUT `/invitations/:id/rsvp`
-   - Set up basic email invitations using Nodemailer.
-
-2. **Frontend – Invite and RSVP Interface**
-   - Design a mobile-friendly interface for event invitations.
-   - Implement RSVP functionality with options to Accept or Decline.
-   - Display invitation status on the Event Dashboard.
-
-3. **Testing & Debugging**
-   - Test sending, accepting, and declining invitations.
-   - Ensure invitees receive accurate event information and can respond on mobile.
-
-### **Phase 5: Notifications and Reminders**
-
-1. **Backend – Notifications API**
-   - Implement real-time notifications for RSVPs and reminders with WebSocket or Socket.io.
-   - Schedule reminders (e.g., 24 hours before the event) using a task scheduler like Node-Cron.
-
-2. **Frontend – Notification System**
-   - Design a notification component that displays RSVP confirmations and reminders.
-   - Ensure notifications are accessible and unobtrusive on mobile devices.
-
-3. **Testing & Debugging**
-   - Test real-time notifications and scheduled reminders.
-   - Verify the effectiveness of the notification system on different devices.
-
-### **Phase 6: Calendar Integration and Final Touches**
-
-1. **Calendar Integration**
-   - Allow users to download events as .ics files or integrate with Google Calendar API for easy scheduling.
+## API Endpoints
+   **Event Management**
+      POST /api/events - Create a new event
+      GET /api/events - Fetch all events
+      PUT /api/events/:eventId - Update an event
+      DELETE /api/events/:eventId - Delete an event
    
-2. **Final Mobile Optimization**
-   - Conduct thorough mobile testing and optimization.
-   - Make any necessary UI adjustments to enhance mobile usability.
-
-3. **Deployment**
-   - Deploy the backend to a cloud service like Heroku or DigitalOcean.
-   - Host the frontend with services like Netlify or Vercel.
-
-With this plan, we can move forward step-by-step, focusing on each feature thoroughly. Let’s start with **Phase 1**: setting up the project structure and installing dependencies. Let me know once you’re ready, and we’ll go from there!
-
-
-
-### **Phase 1: Project Setup**
-
-1. **Define Project Structure and Dependencies**
-   - Initialized a Git repository for version control called "eventify" (done)
-   - Set up Node.js and Express for the backend API.
-            npm init -y
-            npm install express dotenv cors jsonwebtoken bcryptjs
-            npm install -D nodemon (restarting backened during developments)
-            npm install cors
-
-   - Set up a React project for the frontend (you can use Create React App or Vite).
-            npx create-react-app frontend
-            cd frontend
-            npm install axios react-router-dom
-            npm install -D tailwindcss postcss autoprefixer
-            npx tailwindcss init -p
-
-   - Install core dependencies:
-     - Backend: Express, MongoDB (or preferred database), JWT (for authentication), and Nodemailer (for emails).
-     - Frontend: React Router (for navigation), Axios (for API requests), and Tailwind CSS or Styled Components (for mobile-friendly design).
-
-### **Phase 2: User Authentication System**
-
-1. **Backend – User Authentication**
-   install database 
-   npm install mongoose
-
-   - Set up a user authentication API with registration and login endpoints.
-   - Use JSON Web Tokens (JWT) for secure authentication.
-   - Implement basic error handling for invalid logins or registrations.
-
-2. **Frontend – Auth Pages**
-   - Design and implement responsive login and registration forms.
-   - Implement a simple context for handling authentication state across the app.
-   - Ensure mobile-friendly design using Tailwind CSS or CSS Media Queries.
-
-3. **Testing & Debugging**
-   - Test user signup and login flow.
-   - Verify that authenticated pages are only accessible when logged in.
+   **Invitations**
+      POST /api/invitations - Send invitations
+      GET /api/invitations/:invitationId - Fetch invitation details
+   **RSVP**
+      POST /api/rsvp/:invitationId - Submit RSVP
+   **User Management**
+      GET /api/users - Fetch all users (Admin only)
+      PUT /api/users/:userId - Update user details (Admin only)
+      DELETE /api/users/:userId - Delete a user (Admin only)
 
 
-#### For Excel reading
+## Screenshots
+      Dashboard
+      RSVP Page
 
-   npm install xlsx
-   npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+## Future Enhancements
+   Add support for event reminders and calendar integration.
+   Implement more granular user roles (e.g., Organizer, Invitee).
+   Enhance analytics with visual charts and exportable reports.
 
-   npm install twilio
+## Contributing
+   Contributions are welcome! Please follow the steps below:
+
+*** Fork the repository. ***
+   Create a new branch for your feature or bug fix:
+
+   ```bash
+      git checkout -b feature/your-feature-name
+   ```
+   Commit your changes:
+   ```bash
+      git commit -m "Add your message here"
+      Push to your fork and submit a pull request.
+   ```
+## License
+   This project is licensed under the MIT License.
+
+## Acknowledgments
+   Built using open-source tools and libraries.
+
+   Special thanks to Twilio for providing email and OTP verification services.
+   For questions or feedback, feel free to reach out at pranjalekhande11@gmail.com
+
+
+
 
