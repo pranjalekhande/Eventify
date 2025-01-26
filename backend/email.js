@@ -3,16 +3,14 @@ const Invitation = require("./models/Invitation");
 const Event = require("./models/Event");
 require("dotenv").config();
 
-// Email transporter configuration
 const transporter = nodemailer.createTransport({
-  service: "Gmail", // Use your email provider
+  service: "Gmail", 
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
 });
 
-// Function to send a single email
 const sendEmail = async (to, subject, text) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -29,25 +27,24 @@ const sendEmail = async (to, subject, text) => {
   }
 };
 
-// Function to send reminders for upcoming events
 const sendReminders = async () => {
   try {
     const now = new Date();
-    const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours from now
+    const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000); 
 
-    // Find events occurring in the next 24 hours
+    
     const upcomingEvents = await Event.find({
       date: { $gte: now, $lte: tomorrow },
     });
 
     for (const event of upcomingEvents) {
-      // Find attendees who RSVP’d "Accepted" for the event
+     
       const acceptedInvites = await Invitation.find({
         event: event._id,
         rsvpStatus: "Accepted",
       });
 
-      // Send reminder emails to all attendees who RSVP'd "Accepted"
+      
       for (const invite of acceptedInvites) {
         const subject = `Reminder: ${event.title} is happening soon!`;
         const text = `Hi,\n\nThis is a friendly reminder that you RSVP'd "Accepted" for the event "${event.title}" scheduled on ${new Date(

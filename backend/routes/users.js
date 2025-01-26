@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.get("/all", async (req, res) => {
   try {
-    const users = await User.find(); // Fetch all users from the database
-    // Log the users to the console
+    const users = await User.find(); 
+   
     res.status(200).json(users); // Send users as JSON response
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -20,30 +20,29 @@ router.get("/all", async (req, res) => {
 });
 
 
-// Register a new user
 router.post("/register", async (req, res) => {
   const { name, email, password, role } = req.body;
 
   try {
-    // Ensure role is valid
+   
     if (!["admin", "organizer", "invitee"].includes(role)) {
       return res.status(400).json({ msg: "Invalid role" });
     }
 
-    // Check if the user already exists
+   
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ msg: "User already exists" });
 
-    // Hash the password
+   
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create a new user with the provided role
+   
     user = new User({
       name,
       email,
       password: hashedPassword,
-      role, // Explicitly set the role
+      role, 
     });
 
     await user.save();
@@ -64,11 +63,11 @@ router.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
-    // Include the role in the token payload
+    
     const payload = {
       user: {
         id: user.id,
-        role: user.role, // Ensure role is included here
+        role: user.role,
       },
     };
 

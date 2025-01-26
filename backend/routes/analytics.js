@@ -8,7 +8,6 @@ const Event = require("../models/Event");
 const router = express.Router();
 
 
-// Example backend route
 router.get("/dashboard",authMiddleware, async (req, res) => {
   try {
     const events = await Event.find({ organizer: req.user.id }); // Example logic
@@ -19,25 +18,23 @@ router.get("/dashboard",authMiddleware, async (req, res) => {
   }
 });
 
-// Route to get event dashboard analytics
 router.get("/dashboard/:eventId", authMiddleware, async (req, res) => {
   try {
     const { eventId } = req.params;
 
-    // Check if the event exists and belongs to the organizer
     const event = await Event.findById(eventId);
     if (!event) return res.status(404).json({ msg: "Event not found" });
 
     if (event.organizer.toString() !== req.user.id) {
       return res.status(401).json({ msg: "Not authorized to view analytics for this event" });
     }
-    // Fetch invitation counts by RSVP status
+    
     const totalInvites = await Invitation.countDocuments({ event: eventId });
     const accepted = await Invitation.countDocuments({ event: eventId, rsvpStatus: "Accepted" });
     const declined = await Invitation.countDocuments({ event: eventId, rsvpStatus: "Declined" });
     const pending = await Invitation.countDocuments({ event: eventId, rsvpStatus: "Pending" });
 
-    // Return dashboard analytics
+   
     res.json({
       event: {
         title: event.title,
@@ -61,7 +58,7 @@ router.get("/dashboard/rsvp/:eventId/invitations", authMiddleware, async (req, r
     try {
       const { eventId } = req.params;
   
-      // Verify the event exists and belongs to the organizer
+     
       const event = await Event.findById(eventId);
       if (!event) return res.status(404).json({ msg: "Event not found" });
   
@@ -69,7 +66,6 @@ router.get("/dashboard/rsvp/:eventId/invitations", authMiddleware, async (req, r
         return res.status(401).json({ msg: "Not authorized to view RSVPs for this event" });
       }
   
-      // Fetch RSVP responses for the event
       const rsvpList = await Invitation.find({ event: eventId }).select("inviteeEmail rsvpStatus");
   
       res.json(rsvpList);
@@ -105,25 +101,22 @@ router.get("/dashboard/rsvp/:eventId/invitations", authMiddleware, async (req, r
     try {
       const { eventId, invitationId } = req.params;
   
-      // Find the invitation by ID
       const invitation = await Invitation.findById(invitationId);
       if (!invitation) return res.status(404).json({ msg: "Invitation not found" });
   
-      // Check if the event in the invitation matches the eventId parameter
       if (invitation.event.toString() !== eventId) {
         return res.status(400).json({ msg: "Invitation does not belong to the specified event" });
       }
   
-      // Find the event by ID
+     
       const event = await Event.findById(eventId);
       if (!event) return res.status(404).json({ msg: "Event not found" });
   
-      // Ensure the user is authorized to delete invitations for the event
+     
       if (event.organizer.toString() !== req.user.id) {
         return res.status(401).json({ msg: "Not authorized to delete invitations for this event" });
       }
   
-      // Delete the invitation
       await invitation.deleteOne();
   
       res.json({ msg: "Invitation deleted successfully" });

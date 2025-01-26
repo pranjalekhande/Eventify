@@ -10,19 +10,19 @@ const { sendEmail } = require("../email");
 router.post("/send", authMiddleware, async (req, res) => {
   
 
-  const { eventId, inviteeEmail } = req.body; // `inviteeEmail` should be an array of emails
+  const { eventId, inviteeEmail } = req.body; 
 
   try {
-    // Fetch the event
+    
     const event = await Event.findById(eventId);
     if (!event) return res.status(404).json({ msg: "Event not found" });
 
-    // Check authorization
+   
     if (event.organizer.toString() !== req.user.id) {
       return res.status(401).json({ msg: "Not authorized to send invitations for this event" });
     }
 
-    // Map emails to invitation objects
+    
     const invitations = inviteeEmail.map((email) => ({
       inviteeEmail: email,
       event: eventId,
@@ -32,10 +32,10 @@ router.post("/send", authMiddleware, async (req, res) => {
 
     
 
-    // Save invitations in the database
+    
     const createdInvitations = await Invitation.insertMany(invitations);
 
-    // Send email notifications
+    
     const promises = inviteeEmail.map(async (email, index) => {
       const rsvpLink = `http://localhost:3000/public/rsvp/${eventId}/${createdInvitations[index]._id}/`;
       const subject = `You're Invited to ${event.title}`;
@@ -53,14 +53,14 @@ router.post("/send", authMiddleware, async (req, res) => {
 
       
       try {
-        await sendEmail(email, subject, text); // Send email to each invitee
+        await sendEmail(email, subject, text); 
         console.log(`Email sent to: ${email}`);
       } catch (emailError) {
         console.error(`Failed to send email to: ${email}`, emailError);
       }
     });
 
-    // Wait for all emails to be sent
+   
     await Promise.all(promises);
 
     res.status(201).json({ msg: "Invitations sent and email notifications delivered", createdInvitations });
